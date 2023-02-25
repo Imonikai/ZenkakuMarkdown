@@ -4,6 +4,8 @@ import * as vscode from 'vscode';
 
 const getConvertedText = (text: string): string => {
 
+    text += "\n";
+
     //見出しの変換
     text = text.replace(/＃＃＃＃＃＃[　 ]/g, "###### ");
     text = text.replace(/＃＃＃＃＃[　 ]/g, "##### ");
@@ -19,24 +21,21 @@ const getConvertedText = (text: string): string => {
     text = text.replace(/＞[　 ]/g, "> ");
 
     //斜体かつ太字の変換
-    text = text.replace(/＊＊＊([^＊　 \r\n]+)＊＊＊/g, "***$1***");
-    text = text.replace(/＿＿＿([^＿　 \r\n]+)＿＿＿/g, "___$1___");
-
-    //太字の変換
-    text = text.replace(/＊＊([^＊　 \r\n]+)＊＊/g, "**$1**");
-    text = text.replace(/＿＿([^＿　 \r\n]+)＿＿/g, "__$1__");
-
-    //斜体の変換
-    text = text.replace(/＊([^＊　 \r\n]+)＊/g, "*$1*");
-    text = text.replace(/＿([^＿　 \r\n]+)＿/g, "_$1_");
+    text = text.replace(/＊＊＊([^＊\r\n]+)＊＊＊/g, "***$1***");
+    text = text.replace(/＿＿＿([^＿\r\n]+)＿＿＿/g, "___$1___");
 
     //水平線の変換
-    text = text.replace(/＊＊＊[\r\n]/g, "***\n");
-    text = text.replace(/＿＿＿[\r\n]/g, "___\n");
-    text = text.replace(/ーーー[\r\n]/g, "---\n");
-    text = text.replace(/(＊[ 　]+){2}＊[\r\n]/g, "***\n");
-    text = text.replace(/(＿[ 　]+){2}＿[\r\n]/g, "___\n");
-    text = text.replace(/(ー[ 　]+){2}ー[\r\n]/g, "---\n");
+    text = text.replace(/(＊[　 ]*){2,}＊[\r\n]/g, "***\n");
+    text = text.replace(/(＿[　 ]*){2,}＿[\r\n]/g, "___\n");
+    text = text.replace(/(ー[　 ]*){2,}ー[\r\n]/g, "---\n");
+
+    //太字の変換
+    text = text.replace(/＊＊([^＊\r\n]+)＊＊/g, "**$1**");
+    text = text.replace(/＿＿([^＿\r\n]+)＿＿/g, "__$1__");
+
+    //斜体の変換
+    text = text.replace(/＊([^＊\r\n]+)＊/g, "*$1*");
+    text = text.replace(/＿([^＿\r\n]+)＿/g, "_$1_");
 
     //番号付きリストの変換
     text = text.replace(/([０-９0-9]+)[。．.][　 ]/g, "1. ");
