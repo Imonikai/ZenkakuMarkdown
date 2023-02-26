@@ -4,7 +4,9 @@ import * as vscode from 'vscode';
 
 const getConvertedText = (text: string): string => {
 
-    text += "\n";
+    if( text.slice(-1) !== "\n" ) {
+        text += "\n";
+    }
 
     //見出しの変換
     text = text.replace(/＃＃＃＃＃＃[　 ]/g, "###### ");
@@ -54,6 +56,12 @@ const getConvertedText = (text: string): string => {
 
     //打ち消し線の変換
     text = text.replace(/([　 \r\n])～～(.*)～～([　 \r\n])/g, "$1~~$2~~$3");
+
+
+
+    /* ---- ネストと改行の変換は必ず最後に ----- */
+    //ネストと改行の変換
+    text = text.replace(/　　/g, "  ");
 
     return text;
 };
