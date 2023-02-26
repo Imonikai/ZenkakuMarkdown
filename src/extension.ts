@@ -53,8 +53,7 @@ const getConvertedText = (text: string): string => {
     text = text.replace(/［(.*)］：[　 ](.*)/g, "[$1]: $2");
 
     //打ち消し線の変換
-    text = text.replace(/[　 \r\n]～～(.*)～～[　 ]/g, " ~~$1~~ ");
-    text = text.replace(/[　 \r\n]～～(.*)～～[\r\n]/g, " ~~$1~~\n");
+    text = text.replace(/([　 \r\n])～～(.*)～～([　 \r\n])/g, "$1~~$2~~$3");
 
     return text;
 };
