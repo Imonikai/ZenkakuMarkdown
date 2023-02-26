@@ -21,8 +21,8 @@ const getConvertedText = (text: string): string => {
     text = text.replace(/＞[　 ]/g, "> ");
 
     //斜体かつ太字の変換
-    text = text.replace(/＊＊＊([^\r\n]+)＊＊＊/g, "***$1***");
-    text = text.replace(/＿＿＿([^\r\n]+)＿＿＿/g, "___$1___");
+    text = text.replace(/＊＊＊([^\r\n]+)([\r\n]*)([^\r\n]*)＊＊＊/g, "***$1$2$3***");
+    text = text.replace(/＿＿＿([^\r\n]+)([\r\n]*)([^\r\n]*)＿＿＿/g, "___$1$2$3___");
 
     //水平線の変換
     text = text.replace(/(＊[　 ]*){2,}＊[\r\n]/g, "***\n");
@@ -30,12 +30,12 @@ const getConvertedText = (text: string): string => {
     text = text.replace(/(ー[　 ]*){2,}ー[\r\n]/g, "---\n");
 
     //太字の変換
-    text = text.replace(/＊＊([^\r\n]+)＊＊/g, "**$1**");
-    text = text.replace(/＿＿([^\r\n]+)＿＿/g, "__$1__");
+    text = text.replace(/＊＊([^\r\n]+)([\r\n]*)([^\r\n]*)＊＊/g, "**$1$2$3**");
+    text = text.replace(/＿＿([^\r\n]+)([\r\n]*)([^\r\n]*)＿＿/g, "__$1$2$3__");
 
     //斜体の変換
-    text = text.replace(/＊([^\r\n]+)＊/g, "*$1*");
-    text = text.replace(/＿([^\r\n]+)＿/g, "_$1_");
+    text = text.replace(/＊([^\r\n]+)([\r\n]*)([^\r\n]*)＊/g, "*$1$2$3*");
+    text = text.replace(/＿([^\r\n]+)([\r\n]*)([^\r\n]*)＿/g, "_$1$2$3_");
 
     //番号付きリストの変換
     text = text.replace(/([０-９0-9]+)[。．.][　 ]/g, "1. ");
@@ -51,6 +51,10 @@ const getConvertedText = (text: string): string => {
     //定義参照リンクの変換
     text = text.replace(/［(.*)］［(.*)］/g, "[$1][$2]");
     text = text.replace(/［(.*)］：[　 ](.*)/g, "[$1]: $2");
+
+    //打ち消し線の変換
+    text = text.replace(/[　 \r\n]～～(.*)～～[　 ]/g, " ~~$1~~ ");
+    text = text.replace(/[　 \r\n]～～(.*)～～[\r\n]/g, " ~~$1~~\n");
 
     return text;
 };
